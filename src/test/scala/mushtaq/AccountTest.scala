@@ -22,12 +22,9 @@ class AccountTest extends AnyFunSuite {
 
     val future: Future[Seq[Unit]] = Future.sequence(allFutures)
 
-    Await.result(future, 5.seconds)
+//    Await.result(future, 5.seconds)
 
-    val eventualInt = account.getBalance
-
-    val value = Await.result(eventualInt, 5.seconds)
-    println(value)
+    println(Await.result(account.getBalance, 5.seconds))
 
   }
 
