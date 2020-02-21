@@ -13,9 +13,11 @@ class Account(rbi: Rbi) {
 
   implicit val ec: ExecutionContext = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(1))
 
-  def deposit(amount: Int): Future[Unit] = rbi.notification().map { _ =>
-    balance += amount
-    transactions ::= Deposit(amount)
+  def deposit(amount: Int): Future[Unit] = rbi.notification().map { bool =>
+    if (bool) {
+      balance += amount
+      transactions ::= Deposit(amount)
+    }
   }
 
   def withdraw(amount: Int): Future[Unit] = rbi.notification().map { _ =>

@@ -1,15 +1,17 @@
 package mushtaq
 
-import java.util.concurrent.Executors
+import java.util.concurrent.{Executors, ScheduledExecutorService, TimeUnit}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{Future, Promise}
 
 class Rbi {
 
-  implicit val ec: ExecutionContext = ExecutionContext.fromExecutorService(Executors.newFixedThreadPool(1))
+  private val service: ScheduledExecutorService = Executors.newScheduledThreadPool(1)
 
-  def notification(): Future[Unit] = Future {
-    Thread.sleep(100)
+  def notification(): Future[Boolean] = {
+    val p: Promise[Boolean] = Promise()
+    service.schedule(() => p.trySuccess(true), 100, TimeUnit.MILLISECONDS)
+    p.future
   }
 
 }
