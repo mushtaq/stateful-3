@@ -6,7 +6,7 @@ import mushtaq.Transaction.{Deposit, Withdrawal}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class Account(rbi: Rbi) {
+class Account(rbi: RbiStub) {
 
   private var balance                 = 0
   var transactions: List[Transaction] = Nil
